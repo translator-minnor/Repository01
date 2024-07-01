@@ -66,3 +66,22 @@ CREATE TABLE `pay_products_record`(
   PRIMARY KEY (`id`) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
 
+DROP TABLE IF EXISTS `perm_menu`;
+CREATE TABLE `perm_menu`  (
+  `menu_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父菜单ID，一级菜单为0',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单名称',
+  `url` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单URL',
+  `perms` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '授权(多个用逗号分隔，如：user:list,user:create)',
+  `type` int(11) NULL DEFAULT NULL COMMENT '类型   0：目录   1：菜单   2：按钮',
+  PRIMARY KEY (`menu_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 324 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限管理' ROW_FORMAT = Dynamic;
+
+DROP TABLE IF EXISTS `user_role_perm`;
+CREATE TABLE `user_role_perm`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_id` bigint(20) NULL DEFAULT NULL COMMENT '角色ID',
+  `menu_id` bigint(20) NULL DEFAULT NULL COMMENT '菜单ID',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 134 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色与权限对应关系' ROW_FORMAT = Dynamic;
+

@@ -41,6 +41,7 @@
         <easyexcel.version>3.3.2</easyexcel.version>
         <aliyun-dx.version>2.0.24</aliyun-dx.version>
 
+        <common-base.version>1.0-SNAPSHOT</common-base.version>
     </properties>
 
     <dependencies>
@@ -53,6 +54,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.minnow</groupId>
+                <artifactId>common-base</artifactId>
+                <version>${common-base.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

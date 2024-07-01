@@ -1,0 +1,31 @@
+
+spring:
+  application:
+    name: gateway-server
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://192.168.217.131:8848
+#        username: nacos
+#        password: nacos
+        namespace: a9c09998-3fbd-4455-87a1-3a12630d4b42
+        group: A_GROUP
+        service: ${spring.application.name}
+
+      config:
+        server-addr: http://192.168.217.131:8848
+        namespace: a9c09998-3fbd-4455-87a1-3a12630d4b42
+        group: A_GROUP
+        prefix: gateway-server
+        file-extension: yml
+
+  profiles:
+    active: dev
+
+#白名单
+gateway:
+  white:
+    allow-urls:
+      - /auth-server/doLogin  # 用户登录的请求路径
+      - /free

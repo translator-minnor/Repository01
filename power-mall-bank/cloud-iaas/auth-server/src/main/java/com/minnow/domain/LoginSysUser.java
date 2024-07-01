@@ -1,22 +1,22 @@
 package com.minnow.domain;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * user
- */
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "User")
-public class User implements Serializable {
+public class LoginSysUser implements Serializable {
     /**
      * 主键
      */
@@ -32,7 +32,7 @@ public class User implements Serializable {
     /**
      * 用户密码
      */
-    @TableField(value = "password",updateStrategy = FieldStrategy.NOT_EMPTY)
+    @TableField(value = "password")
     private String password;
 
     /**
