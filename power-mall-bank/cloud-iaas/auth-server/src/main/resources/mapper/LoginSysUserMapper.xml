@@ -8,11 +8,18 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="userName" column="user_name" jdbcType="VARCHAR"/>
             <result property="password" column="password" jdbcType="VARCHAR"/>
-            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="roleId" column="role_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,user_name,password,
-        status
+        role_id
     </sql>
+    <select id="selectPermsByUserId" resultType="java.lang.String">
+        select pm.perms
+        from perm_menu pm
+                 join user_role_perm urp
+                      on urp.menu_id = pm.menu_id
+        where urp.role_id = #{roleId}
+    </select>
 </mapper>

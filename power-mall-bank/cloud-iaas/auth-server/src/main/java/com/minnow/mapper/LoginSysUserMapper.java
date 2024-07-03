@@ -3,6 +3,8 @@ package com.minnow.mapper;
 import com.minnow.domain.LoginSysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.Set;
+
 /**
 * @author 小池鱼
 * @description 针对表【user】的数据库操作Mapper
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface LoginSysUserMapper extends BaseMapper<LoginSysUser> {
 
+    Set<String> selectPermsByUserId(Integer id);
 }
 
 

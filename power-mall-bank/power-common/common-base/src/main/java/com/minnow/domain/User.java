@@ -38,8 +38,8 @@ public class User implements Serializable {
     /**
      * 权限：1管理员/2普通用户/3尊贵用户
      */
-    @TableField(value = "status")
-    private Integer status;
+    @TableField(value = "role_id")
+    private Integer roleId;
 
     private static final long serialVersionUID = 1L;
 }

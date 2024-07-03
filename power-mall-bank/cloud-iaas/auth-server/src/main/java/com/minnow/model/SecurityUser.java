@@ -2,6 +2,7 @@ package com.minnow.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class SecurityUser implements UserDetails {
 
     private Integer id;
@@ -31,7 +33,7 @@ public class SecurityUser implements UserDetails {
     /**
      * 权限：1管理员/2普通用户/3尊贵用户
      */
-    private Integer status;
+    private Integer roleId;
 
     private Set<String> perms = new HashSet<>();
     //TODO 用户名下卡号
