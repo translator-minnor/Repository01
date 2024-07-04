@@ -23,6 +23,13 @@
         <dependency>
             <groupId>com.minnow</groupId>
             <artifactId>common-base</artifactId>
+            <exclusions>
+                <!--排除common-base依赖中的Spring Security依赖-->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--nacos注册中心依赖-->
         <dependency>
