@@ -42,6 +42,7 @@
         <aliyun-dx.version>2.0.24</aliyun-dx.version>
 
         <common-base.version>1.0-SNAPSHOT</common-base.version>
+        <common-business.version>1.0-SNAPSHOT</common-business.version>
     </properties>
 
     <dependencies>
@@ -54,6 +55,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.minnow</groupId>
+                <artifactId>common-business</artifactId>
+                <version>${common-business.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.minnow</groupId>
                 <artifactId>common-base</artifactId>

@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: manager-service # 设置服务名称
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.217.131:8848   # 指定注册中心地址
+        namespace: a9c09998-3fbd-4455-87a1-3a12630d4b42
+        group: A_GROUP
+        service: ${spring.application.name}
+      config: # 配置中心设置
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        group: ${spring.cloud.nacos.discovery.group}
+        prefix: ${spring.application.name}
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  profiles:
+    active: dev

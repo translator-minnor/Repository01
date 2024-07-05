@@ -21,7 +21,7 @@ public class LoginSysUser implements Serializable {
      * 主键
      */
     @TableId(value = "id", type = IdType.INPUT)
-    private Integer id;
+    private Long id;
 
     /**
      * 用户名称

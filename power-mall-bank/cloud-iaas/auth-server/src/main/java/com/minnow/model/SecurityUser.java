@@ -18,7 +18,7 @@ import java.util.Set;
 @Builder
 public class SecurityUser implements UserDetails {
 
-    private Integer id;
+    private Long id;
 
     /**
      * 用户名称

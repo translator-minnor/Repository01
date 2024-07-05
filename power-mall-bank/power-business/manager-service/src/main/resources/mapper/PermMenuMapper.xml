@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.minnow.mapper.PermMenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.minnow.domain.PermMenu">
+            <id property="menuId" column="menu_id" jdbcType="BIGINT"/>
+            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="url" column="url" jdbcType="VARCHAR"/>
+            <result property="perms" column="perms" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        menu_id,parent_id,name,
+        url,perms,type
+    </sql>
+    <select id="selectUserMenusByUserId" resultType="com.minnow.domain.PermMenu">
+        SELECT
+            t1.menu_id, t1.parent_id, t1.`name`, t1.url, t1.perms, t1.`type`
+        FROM
+            perm_menu t1
+                JOIN user_role_perm t2
+                JOIN user t3
+                     ON t1.menu_id = t2.menu_id AND t2.role_id = t3.role_id
+        WHERE
+            t3.user_id = #{userId} AND ( t1.type = 0 OR t1.type = 1 )
+    </select>
+
+
+</mapper>
