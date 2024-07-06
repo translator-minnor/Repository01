@@ -46,4 +46,5 @@ public class Result<T> implements Serializable {
         // 业务处理失败，返回失败信息
         return fail(BusinessEnum.OPERATION_FAIL);
     }
+
 }

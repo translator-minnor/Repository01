@@ -3,10 +3,13 @@ SET FOREIGN_KEY_CHECKS=0;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`(
-  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `user_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '用户名称',
   `password` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '用户密码',
-  `status` INT(4) NOT NULL COMMENT '权限：1管理员/2普通用户/3尊贵用户',
+  `mobile` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
+  `role_id` INT(4) NOT NULL COMMENT '权限：1管理员/2普通用户/3尊贵用户',
+  `create_user_id` bigint(20) NULL DEFAULT NULL COMMENT '创建者ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
 )ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Compact;
 
@@ -84,4 +87,14 @@ CREATE TABLE `user_role_perm`  (
   `menu_id` bigint(20) NULL DEFAULT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 134 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色与权限对应关系' ROW_FORMAT = Dynamic;
+
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role`  (
+  `role_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
+  `remark` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `create_user_id` bigint(20) NULL DEFAULT NULL COMMENT '创建者ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`role_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色' ROW_FORMAT = Dynamic;
 
