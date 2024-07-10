@@ -3,6 +3,7 @@ package com.minnow.service;
 import com.minnow.domain.PermMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,5 +19,11 @@ public interface PermMenuService extends IService<PermMenu> {
      * @return 菜单集合
      */
     Set<PermMenu> queryUserMenus(Long userId);
+
+    /**
+     * 查询系统所有权限集合
+     * @return 系统所有权限集合
+     */
+    List<PermMenu> queryAllSysMenuList();
 
 }

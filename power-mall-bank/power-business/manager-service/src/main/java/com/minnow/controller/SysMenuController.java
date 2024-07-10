@@ -7,11 +7,11 @@ import com.minnow.util.AuthUtils;
 import com.minnow.vo.MenuAndPermsVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Set;
 
 @RequestMapping("sys/menu")
@@ -39,4 +39,56 @@ public class SysMenuController {
         return Result.success(menuAndPermsVo);
     }
 
+    @ApiOperation("查询系统所有权限集合")
+    @GetMapping("table")
+    @PreAuthorize("hasAuthority('sys:menu:list')")
+    public Result<List<PermMenu>> loadAllSysMenuList() {
+        List<PermMenu> menuList = permMenuService.queryAllSysMenuList();
+        return Result.success(menuList);
+    }
+
+    /**
+     * 新增权限
+     * @param permMenu
+     * @return
+     */
+    @PostMapping
+    @PreAuthorize("hasAuthority('sys:menu:save')")
+    public Result<String> saveSysMenu(@RequestBody PermMenu permMenu) {
+        return Result.handle(permMenuService.save(permMenu));
+    }
+
+    /**
+     * 查询权限详情
+     * @param menuId
+     * @return
+     */
+    @GetMapping("info/{menuId}")
+    @PreAuthorize("hasAuthority('sys:menu:info')")
+    public Result<PermMenu> loadSysMenuInfo(@PathVariable Long menuId) {
+        PermMenu menu = permMenuService.getById(menuId);
+        return Result.success(menu);
+    }
+
+    /**
+     * 修改权限
+     * @param permMenu
+     * @return
+     */
+    @PutMapping
+    @PreAuthorize("hasAuthority('sys:menu:update')")
+    public Result<String> modifySysMenu(@RequestBody PermMenu permMenu) {
+        return Result.handle(permMenuService.updateById(permMenu));
+    }
+
+    /**
+     * 删除权限
+     * @param menuId
+     * @return
+     */
+    @DeleteMapping("{menuId}")
+    @PreAuthorize("hasAuthority('sys:menu:delete')")
+    public Result<String> removeSysMenu(@PathVariable Long menuId) {
+        return Result.handle(permMenuService.removeById(menuId));
+    }
 }

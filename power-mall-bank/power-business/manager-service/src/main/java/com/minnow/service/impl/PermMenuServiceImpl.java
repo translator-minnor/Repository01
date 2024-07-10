@@ -1,15 +1,21 @@
 package com.minnow.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.minnow.domain.PermMenu;
+import com.minnow.ex.BusinessException;
 import com.minnow.service.PermMenuService;
 import com.minnow.mapper.PermMenuMapper;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,6 +44,11 @@ public class PermMenuServiceImpl extends ServiceImpl<PermMenuMapper, PermMenu>
         return permMenus;
     }
 
+    @Override
+    public List<PermMenu> queryAllSysMenuList() {
+        return permMenuMapper.selectList(null);
+    }
+
     private Set<PermMenu> translateMenusToTree(Set<PermMenu> permMenus, long l) {
         Set<PermMenu> roots = permMenus.stream()
                 .filter(menu -> menu.getParentId().equals(l))
@@ -45,6 +56,32 @@ public class PermMenuServiceImpl extends ServiceImpl<PermMenuMapper, PermMenu>
         // 循环遍历父节点集合，根据指定父节点id查询子节点集合
         roots.forEach(r -> r.setList(translateMenusToTree(permMenus,r.getMenuId())));
         return roots;
+    }
+
+    @Override
+    @CacheEvict(allEntries = true)
+    public boolean save(PermMenu permMenu) {
+        return super.save(permMenu);
+    }
+
+    @Override
+    @CacheEvict(allEntries = true)
+    public boolean updateById(PermMenu permMenu) {
+        return super.updateById(permMenu);
+    }
+
+    @Override
+    @CacheEvict(allEntries = true)
+    public boolean removeById(Serializable id) {
+        // 查询当前权限节点的子节点
+        List<PermMenu> childMenuList = permMenuMapper.selectList(new LambdaQueryWrapper<PermMenu>()
+                .eq(PermMenu::getParentId, id)
+        );
+        // 判断是否包含子节点
+        if (!CollectionUtils.isEmpty(childMenuList) && childMenuList.size() != 0) {
+            throw new BusinessException("当前节点包含子节点，不可删除");
+        }
+        return super.removeById(id);
     }
 }
 
